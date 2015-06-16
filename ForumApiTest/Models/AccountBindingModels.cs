@@ -35,4 +35,14 @@ namespace ForumApiTest.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
     }
+
+    public class UserInfoBindingModel
+    {
+        public string Nickname { get; set; }
+        public string Signature { get; set; }
+        public string Avatar { get; set; }
+        public int ArticleCount { get; set; }
+        public int FellowCount { get; set; }
+        public DateTime UpdateTime { get; set; }
+    }
 }

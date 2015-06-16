@@ -21,8 +21,22 @@ namespace ForumApiTest.Models
         }
     }
 
+    public class ApplicationUserInfo
+    {        
+        public string id { get; set; }
+        public string Nickname { get; set; }
+        public string Signature { get; set; }
+        public string Avatar { get; set; }
+        public int ArticleCount { get; set; }
+        public int FellowCount { get; set; }
+        public DateTime UpdateTime { get; set; }
+        [ForeignKey("id")]
+        public ApplicationUser ApplicationUser { get; set; }
+    }
+
     public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<ApplicationUserInfo> AspNetUserInfo { get; set; }
         public ApplicationDbContext()
             : base("name=DefaultConnection")
         {
