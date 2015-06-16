@@ -64,6 +64,7 @@ namespace ForumApiTest.Controllers
         }
 
         //POST api/Account/AddInfo
+        [Route("AddInfo")]
         public async Task<IHttpActionResult> AddInfo(UserInfoBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -101,6 +102,29 @@ namespace ForumApiTest.Controllers
                 }
             }
             return Ok();
+        }
+
+        //GET api/Account/GetInfo
+        [Route("GetInfo")]
+        public async Task<UserInfoBindingModel> GetInfo(UserInfoBindingModel model)
+        {
+            string userId = User.Identity.GetUserId();
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                var userInfo = context.AspNetUserInfo.Where(u => u.id == userId).FirstOrDefault();
+                if (userInfo == null)
+                    return null;
+                else
+                    return new UserInfoBindingModel
+                    {
+                        Nickname = userInfo.Nickname,
+                        Signature = userInfo.Signature,
+                        Avatar = userInfo.Avatar,
+                        ArticleCount = userInfo.ArticleCount,
+                        FellowCount = userInfo.FellowCount,
+                        UpdateTime = userInfo.UpdateTime
+                    };
+            }
         }
 
         private IAuthenticationManager Authentication
